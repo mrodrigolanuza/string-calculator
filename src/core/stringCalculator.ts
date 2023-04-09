@@ -1,25 +1,26 @@
 export function sumNumbers(expression){
     
-    if(expression === null)
+    if(isNull(expression))
         return 0;
     
-    if(expression === '')
+    if(isEmpty(expression))
         return 0;
     
     if(isALetter(expression))
         return 0;
 
-    if(expression.includes(',')){
-         const numerosArray = expression.split(",");
-         return numerosArray.reduce((total, num) => {
-            const regex = /^[0-9]$/;
-            if(regex.test(num))
-                return (total + Number(num));
-            return total;
-        }, 0);
-    }
-    
-    return Number(expression);
+    const expressionElements = expression.split(',');
+    return expressionElements
+           .map((element) => isNaN(element) ? 0 : Number(element))
+           .reduce((p, c)=> p + c);
+}
+
+function isNull(expression){
+    return expression === null;
+}
+
+function isEmpty(expression){
+    return expression === '';
 }
 
 function isALetter(expression){
