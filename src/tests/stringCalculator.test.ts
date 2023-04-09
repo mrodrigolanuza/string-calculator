@@ -4,9 +4,9 @@ OK> null ⇒ 0, "" ⇒ 0
 OK> "1" ⇒ 1
 OK> "1,2" ⇒ 3, "1,2,3" ⇒ 6
 OK> "a" ⇒ 0
-> "1,a" ⇒ 1
-> "1,a,2" ⇒ 3
-> "1a, 2" ⇒ 2
+OK> "1,a" ⇒ 1
+OK> "1,a,2" ⇒ 3
+OK> "1a, 2" ⇒ 2
 > "//#/3#2" ⇒ 5
 > "//#/3,2" ⇒ 0
 >"//%/1%2%3" ⇒ 6
@@ -39,5 +39,11 @@ describe("The String Calculator", ()=>{
         expect(sumNumbers('1,a')).toBe(1);
         expect(sumNumbers('1,a,2')).toBe(3);
         expect(sumNumbers('b,5,a,2,9')).toBe(16);
+    });
+    it("returns sum when expression contains comma-separated numeric and alfanumeric characters",()=>{
+        expect(sumNumbers('1a,2')).toBe(2);
+        expect(sumNumbers('3,a2c,2')).toBe(5);
+        expect(sumNumbers('4,2,3c')).toBe(6);
+        expect(sumNumbers('a4,2d,3c')).toBe(0);
     });
 });
