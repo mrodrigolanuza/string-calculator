@@ -12,7 +12,12 @@ export function sumNumbers(expression){
 
     if(expression.includes(',')){
          const numerosArray = expression.split(",");
-         return numerosArray.reduce((total, num) => total + Number(num), 0);
+         return numerosArray.reduce((total, num) => {
+            const regex = /^[0-9]$/;
+            if(regex.test(num))
+                return (total + Number(num));
+            return total;
+        }, 0);
     }
     
     return Number(expression);
