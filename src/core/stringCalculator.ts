@@ -6,8 +6,7 @@ export function sumNumbers(expression){
     if(expression === '')
         return 0;
     
-    const regex = /^[a-zA-Z]$/;
-    if(regex.test(expression))
+    if(isALetter(expression))
         return 0;
 
     if(expression.includes(',')){
@@ -21,4 +20,9 @@ export function sumNumbers(expression){
     }
     
     return Number(expression);
+}
+
+function isALetter(expression){
+    const regex = /^[a-zA-Z]$/;
+    return regex.test(expression);
 }
