@@ -46,4 +46,9 @@ describe("The String Calculator", ()=>{
         expect(sumNumbers('4,2,3c')).toBe(6);
         expect(sumNumbers('a4,2d,3c')).toBe(0);
     });
+    it("returns sum when expression contains a customized split character",()=>{
+        expect(sumNumbers('//#/3#2')).toBe(5);
+        expect(sumNumbers('//#/3,2')).toBe(0);
+        expect(sumNumbers('//%/1%2%3')).toBe(6);
+    });
 });
