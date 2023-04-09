@@ -1,38 +1,59 @@
 export function sumNumbers(expression){
-    
+    const nothingToSum = 0;
+
     if(isNull(expression))
-        return 0;
+        return nothingToSum;
     
     if(isEmpty(expression))
-        return 0;
+        return nothingToSum;
     
     if(isALetter(expression))
-        return 0;
+        return nothingToSum;
 
-    const regexp = /^\/.{2}\/.*$/;
-    if(regexp.test(expression)){
-        const splitCharacter = expression.charAt(2);
-        const relevantExpression = expression.substring(4);
-        return relevantExpression.split(splitCharacter)
-        .map((element) => isNaN(element) ? 0 : Number(element))
-        .reduce((p, c)=> p + c);
+    if(containsCustomizedSeparatorPattern(expression)){
+        return getElementsFromCustomizedSeparator(expression)
+               .map(getNumber)
+               .reduce(sum);
     }
 
-    const expressionElements = expression.split(',');
-    return expressionElements
-           .map((element) => isNaN(element) ? 0 : Number(element))
-           .reduce((p, c)=> p + c);
+    return getElementsSeparatedBy(expression, ',')
+           .map(getNumber)
+           .reduce(sum);
 }
 
-function isNull(expression){
+function containsCustomizedSeparatorPattern(expression){
+    const regexp = /^\/.{2}\/.*$/;
+    return regexp.test(expression);
+}
+
+function getNumber(element:string){
+    const parsedElement = Number(element);
+    return isNaN(parsedElement) ? 0 : parsedElement;
+}
+
+function sum(total, current){
+    return total + current;
+}
+
+function getElementsFromCustomizedSeparator(expression:string){
+    const splitCharacter = expression.charAt(2);
+    const expressionCoreData = expression.substring(4);
+    return expressionCoreData.split(splitCharacter)
+}
+
+function getElementsSeparatedBy(expression:string, separator:string){
+    return expression.split(separator);
+}
+
+function isNull(expression:string){
     return expression === null;
 }
 
-function isEmpty(expression){
+function isEmpty(expression:string){
     return expression === '';
 }
 
-function isALetter(expression){
+function isALetter(expression:string){
     const regex = /^[a-zA-Z]$/;
     return regex.test(expression);
 }
